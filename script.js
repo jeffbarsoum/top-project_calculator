@@ -113,8 +113,29 @@ function toggleCalcMode() {
 
 function appendInput(char) {
   if (!char) return;
-  console.log(inputString.calcMode);
+  console.log(inputString.calcArray);
+  const calcArray = inputString.calcArray;
+  const lastIndex = calcArray.length - 1;
+
+  const isOperator = char in operators;
+  const isNewEntry =
+    calcArray.length === 0 || calcArray[lastIndex] in operators;
+  if (isOperator && isNewEntry) return;
+
+  if (isOperator || isNewEntry) {
+    calcArray.push(char);
+  } else {
+    calcArray[lastIndex] += char;
+  }
+
   inputString.calcMode.textContent += char;
+  // if (char in operators && !(calcArray[lastIndex] in operators)) {
+  //   calcArray.push(char);
+  // } else if (lastIndex >= 0) {
+  //   calcArray[lastIndex] += char;
+  // } else {
+  //   calcArray.push(char);
+  // }
 }
 
 function generateCalc() {
