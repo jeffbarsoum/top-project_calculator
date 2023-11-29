@@ -9,51 +9,53 @@ const inputString = {
   calcIndex: [],
 };
 
+const calcOutput = document.querySelector('.screen-row.output');
+
 const operators = {
-  "+": add(),
-  "-": subtract(),
-  "/": divide(),
-  "*": multiply(),
+  "+": add,
+  "-": subtract,
+  "/": divide,
+  "*": multiply,
 };
 
 const keyCalculatorMode = {
-  0: {
+  '0': {
     keydown: [null],
     keyup: [appendInput],
   },
-  1: {
+  '1': {
     keydown: [null],
     keyup: [appendInput],
   },
-  2: {
+  '2': {
     keydown: [null],
     keyup: [appendInput],
   },
-  3: {
+  '3': {
     keydown: [null],
     keyup: [appendInput],
   },
-  4: {
+  '4': {
     keydown: [null],
     keyup: [appendInput],
   },
-  5: {
+  '5': {
     keydown: [null],
     keyup: [appendInput],
   },
-  6: {
+  '6': {
     keydown: [null],
     keyup: [appendInput],
   },
-  7: {
+  '7': {
     keydown: [null],
     keyup: [appendInput],
   },
-  8: {
+  '8': {
     keydown: [null],
     keyup: [appendInput],
   },
-  9: {
+  '9': {
     keydown: [null],
     keyup: [appendInput],
   },
@@ -73,12 +75,20 @@ const keyCalculatorMode = {
     keydown: [null],
     keyup: [appendInput],
   },
+  "=": {
+    keydown: [null],
+    keyup: [equals],
+  },
+  "Enter": {
+    keydown: [null],
+    keyup: [equals],
+  },
 };
 
 addListeners(keyCalculatorMode, "keyup");
 
 function keyHandler(evt) {
-  console.log(evt);
+  // console.log(evt);
   if (evt.repeat) return;
   if (!(evt.key in keyCalculatorMode)) return;
   if (!(evt.type in keyCalculatorMode[evt.key])) return;
@@ -113,7 +123,7 @@ function toggleCalcMode() {
 
 function appendInput(char) {
   if (!char) return;
-  console.log(inputString.calcArray);
+  
   const calcArray = inputString.calcArray;
   const lastIndex = calcArray.length - 1;
 
@@ -129,6 +139,7 @@ function appendInput(char) {
   }
 
   inputString.calcMode.textContent += char;
+  console.log(inputString.calcArray);
   // if (char in operators && !(calcArray[lastIndex] in operators)) {
   //   calcArray.push(char);
   // } else if (lastIndex >= 0) {
@@ -138,27 +149,56 @@ function appendInput(char) {
   // }
 }
 
-function generateCalc() {
-  const start =
-    inputString.lastIndexOf("(") ??
-    inputString.lastIndexOf("[") ??
-    inputString.lastIndexOf("{");
-
-  inputString.calcArray.unshift({
-    startIndex: inputString.text.length,
-    startChar: inputString.text.slice(-1),
-    endIndex: null,
-    operation: null,
-  });
+function generateCalc(operatorIndex) {
+  const leftOperand = inputString.calcArray[operatorIndex-1];
+  const rightOperand = inputString.calcArray[operatorIndex+1];
+  const input = inputString.calcArray[operatorIndex];
+  // run the calc algorithm then replace the calculation pattern with the answer
+  inputString.calcArray.splice(operatorIndex-1, 3, operators[input](leftOperand, rightOperand))
 }
 
 function equals() {
   // launch w/ equal / enter /close-parenthesis
+
   // do multiplication and division first
+  let opIndex = -1
+  do {
+    opIndex = inputString.calcArray.indexOf("*")
+      if (opIndex !== -1) generateCalc(opIndex)
+    }
+  while (opIndex !== -1)
+
+  do {
+    opIndex = inputString.calcArray.indexOf("/")
+      if (opIndex !== -1) generateCalc(opIndex)
+    }
+  while (opIndex !== -1)
+
+
+  // now addition and subtraction
+  do {
+    opIndex = inputString.calcArray.indexOf("+")
+      if (opIndex !== -1) generateCalc(opIndex)
+    }
+  while (opIndex !== -1)
+
+  do {
+    opIndex = inputString.calcArray.indexOf("-")
+      if (opIndex !== -1) generateCalc(opIndex)
+    }
+  while (opIndex !== -1)
+
+  // print the output
+  console.log(inputString.calcArray);
+  calcOutput.textContent = inputString.calcArray.join(' ');
+
+  // clear the calc array
+  inputString.calcArray.length = 0
+
 }
 
-function add() {}
-function subtract() {}
-function divide() {}
-function multiply() {}
+function add(a, b) {return +a + +b}
+function subtract(a, b) {return +a - +b}
+function divide(a, b) {return a / b}
+function multiply(a, b) {return a * b}
 function exponent() {}
