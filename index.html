@@ -6,7 +6,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="style.css" rel="stylesheet">
+  <script src="keyCalculatorMode.js" type="module" defer></script>
   <script src="script.js" defer></script>
+  
 </head>
 
 <body>
@@ -24,27 +26,27 @@
 
         <div class="nav-row">
           <div class="nav-space"></div>
-          <button type="button" class="key-up button-nav">⬆️</button>
+          <button type="button" data-key="ArrowUp" class="button-nav">⬆️</button>
           <div class="nav-space"></div>
         </div>
 
         <div class="nav-row">
-          <button type="button" class="key-left button-nav">⬅️</button>
+          <button type="button" data-key="ArrowLeft" class="button-nav">⬅️</button>
           <div class="nav-space"></div>
-          <button type="button" class="key-right button-nav">➡️</button>
+          <button type="button" data-key="ArrowRight" class="button-nav">➡️</button>
         </div>
 
         <div class="nav-row">
           <div class="nav-space"></div>
-          <button type="button" class="key-down button-nav">⬇️</button>
+          <button type="button" data-key="ArrowDown" class="button-nav">⬇️</button>
           <div class="nav-space"></div>
         </div>
 
         <div class="nav-row">
-          <button type="button" class="key-paren-open button-nav">(</button>
-          <button type="button" class="key-paren-close button-nav">)</button>
-          <button type="button" class="key-get button-nav">GET</button>
-          <button type="button" class="key-store button-nav">STORE</button>
+          <button type="button" data-key="(" class="button-nav">(</button>
+          <button type="button" data-key=")" class="button-nav">)</button>
+          <button type="button" data-key="V" class="button-nav">GET</button>
+          <button type="button" data-key="C" class="button-nav">STORE</button>
         </div>
 
       </div>
@@ -54,35 +56,41 @@
     <div class="buttons">
 
       <div class="button-column">
-        <button type="button" class="key-nth-root button-other">x<sup>2</sup></button>
-        <button type="button" class="key-square-root button-other">x<sup>2</sup></button>
-        <button type="button" class="key-power button-other">x<sup>y</sup></button>
-        <button type="button" class="key-squared button-other">x<sup>2</sup></button>
-        <button type="button" class="key-clear button-other">CLEAR</button>
+        <button type="button" data-key="S" class="button-other">x<sup>2</sup></button>
+        <button type="button" data-key="Backspace" class="button-other">BACK</button>       
+        <button type="button" data-key="Escape" class="button-other">CLEAR</button>
       </div>
 
       <div class="button-column">
-        <button type="button" class="key-inv button-other">x<sup>-1</sup></button>
-        <button type="button" class="key-7 button-number">7</button>
-        <button type="button" class="key-4 button-number">4</button>
-        <button type="button" class="key-1 button-number">1</button>
-        <button type="button" class="key-0 button-number">0</button>
+        <button type="button" data-key="^" class="button-other">x<sup>y</sup></button>
+        <button type="button" data-key="7" class="button-number">7</button>
+        <button type="button" data-key="4" class="button-number">4</button>
+        <button type="button" data-key="1" class="button-number">1</button>
+        <button type="button" data-key="0" class="button-number">0</button>
       </div>
 
       <div class="button-column">
-        <button type="button" class="key-inv button-other">x<sup>-1</sup></button>
-        <button type="button" class="key-8 button-number">8</button>
-        <button type="button" class="key-5 button-number">5</button>
-        <button type="button" class="key-2 button-number">2</button>
-        <button type="button" class="key-decimal button-number">.</button>
+        <button type="button" data-key="Q" class="button-other">&Sqrt;x</button>
+        <button type="button" data-key="8" class="button-number">8</button>
+        <button type="button" data-key="5" class="button-number">5</button>
+        <button type="button" data-key="2" class="button-number">2</button>
+        <button type="button" data-key="." class="button-number">.</button>
       </div>
 
       <div class="button-column">
-        <button type="button" class="key-inv button-other">x<sup>-1</sup></button>
-        <button type="button" class="key-9 button-number">9</button>
-        <button type="button" class="key-6 button-number">6</button>
-        <button type="button" class="key-3 button-number">3</button>
-        <button type="button" class="key-decimal button-plus-minus">+/-</button>
+        <button type="button" data-key="R" class="button-other"><sup>y</sup>&Sqrt;x</button> 
+        <button type="button" data-key="9" class="button-number">9</button>
+        <button type="button" data-key="6" class="button-number">6</button>
+        <button type="button" data-key="3" class="button-number">3</button>
+        <button type="button" data-key="N" class="button-plus-minus">+/-</button>
+      </div>
+
+      <div class="button-column">
+        <button type="button" data-key="/" class="button-operator">&divide;</button>
+        <button type="button" data-key="*" class="button-operator">&times;</button>
+        <button type="button" data-key="+" class="button-operator">&plus;</button>
+        <button type="button" data-key="-" class="button-operator">&minus;</button>
+        <button type="button" data-key="=" class="button-operator">&equals;</button>
       </div>
 
     </div>

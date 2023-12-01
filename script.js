@@ -1,3 +1,94 @@
+const keyCalculatorMode = {
+  '0': {
+    keydown: [null],
+    keyup: [appendInput],
+    mouseup: [appendInput],
+  },
+  '1': {
+    keydown: [null],
+    keyup: [appendInput],
+    mouseup: [appendInput],
+  },
+  '2': {
+    keydown: [null],
+    keyup: [appendInput],
+    mouseup: [appendInput],
+  },
+  '3': {
+    keydown: [null],
+    keyup: [appendInput],
+    mouseup: [appendInput],
+  },
+  '4': {
+    keydown: [null],
+    keyup: [appendInput],
+    mouseup: [appendInput],
+  },
+  '5': {
+    keydown: [null],
+    keyup: [appendInput],
+    mouseup: [appendInput],
+  },
+  '6': {
+    keydown: [null],
+    keyup: [appendInput],
+    mouseup: [appendInput],
+  },
+  '7': {
+    keydown: [null],
+    keyup: [appendInput],
+    mouseup: [appendInput],
+  },
+  '8': {
+    keydown: [null],
+    keyup: [appendInput],
+    mouseup: [appendInput],
+  },
+  '9': {
+    keydown: [null],
+    keyup: [appendInput],
+    mouseup: [appendInput],
+  },
+  "+": {
+    keydown: [null],
+    keyup: [appendInput],
+    mouseup: [appendInput],
+  },
+  "-": {
+    keydown: [null],
+    keyup: [appendInput],
+    mouseup: [appendInput],
+  },
+  "*": {
+    keydown: [null],
+    keyup: [appendInput],
+    mouseup: [appendInput],
+  },
+  "/": {
+    keydown: [null],
+    keyup: [appendInput],
+    mouseup: [appendInput],
+  },
+  "=": {
+    keydown: [null],
+    keyup: [equals],
+    mouseup: [equals],
+  },
+  "Enter": {
+    keydown: [null],
+    keyup: [equals],
+    mouseup: [equals],
+  },
+}
+
+const operators = {
+  "+": add,
+  "-": subtract,
+  "/": divide,
+  "*": multiply,
+};
+
+
 let calcMode = true;
 
 const inputString = {
@@ -11,88 +102,20 @@ const inputString = {
 
 const calcOutput = document.querySelector('.screen-row.output');
 
-const operators = {
-  "+": add,
-  "-": subtract,
-  "/": divide,
-  "*": multiply,
-};
 
-const keyCalculatorMode = {
-  '0': {
-    keydown: [null],
-    keyup: [appendInput],
-  },
-  '1': {
-    keydown: [null],
-    keyup: [appendInput],
-  },
-  '2': {
-    keydown: [null],
-    keyup: [appendInput],
-  },
-  '3': {
-    keydown: [null],
-    keyup: [appendInput],
-  },
-  '4': {
-    keydown: [null],
-    keyup: [appendInput],
-  },
-  '5': {
-    keydown: [null],
-    keyup: [appendInput],
-  },
-  '6': {
-    keydown: [null],
-    keyup: [appendInput],
-  },
-  '7': {
-    keydown: [null],
-    keyup: [appendInput],
-  },
-  '8': {
-    keydown: [null],
-    keyup: [appendInput],
-  },
-  '9': {
-    keydown: [null],
-    keyup: [appendInput],
-  },
-  "+": {
-    keydown: [null],
-    keyup: [appendInput],
-  },
-  "-": {
-    keydown: [null],
-    keyup: [appendInput],
-  },
-  "*": {
-    keydown: [null],
-    keyup: [appendInput],
-  },
-  "/": {
-    keydown: [null],
-    keyup: [appendInput],
-  },
-  "=": {
-    keydown: [null],
-    keyup: [equals],
-  },
-  "Enter": {
-    keydown: [null],
-    keyup: [equals],
-  },
-};
 
-addListeners(keyCalculatorMode, "keyup");
+addListeners(keyCalculatorMode, "keyup", "mouseup");
 
 function keyHandler(evt) {
-  // console.log(evt);
+  console.log(evt);
+  const isButton = evt.target.nodeName === 'BUTTON';
+  const key = evt.type === 'keyup' ? evt.key : isButton ? evt.target.dataset.key : null;
+
+  if (!key) return;
   if (evt.repeat) return;
-  if (!(evt.key in keyCalculatorMode)) return;
-  if (!(evt.type in keyCalculatorMode[evt.key])) return;
-  keyCalculatorMode[evt.key][evt.type].forEach((fn) => fn(evt.key));
+  if (!(key in keyCalculatorMode)) return;
+  if (!(evt.type in keyCalculatorMode[key])) return;
+  keyCalculatorMode[key][evt.type].forEach((fn) => fn(key));
 }
 
 function addListeners(listeners, ...events) {
