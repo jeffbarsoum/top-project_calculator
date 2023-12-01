@@ -150,6 +150,9 @@ function appendInput(char) {
   const calcArray = inputString.calcArray;
   const lastIndex = calcArray.length - 1;
 
+  // clear the text input if the calc array is empty (don't forget to store these in an array for recalling)
+  if (calcArray.length === 0) inputString.calcMode.textContent = '';
+
   const isOperator = char in operators;
   const isNewEntry =
     calcArray.length === 0 || calcArray[lastIndex] in operators;
