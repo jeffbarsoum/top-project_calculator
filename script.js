@@ -1,3 +1,9 @@
+//////////////////////////////////////////////////////////////////
+// Input Dictionaries
+//////////////////////////////////////////////////////////////////
+
+// functions to run for each event associated with a key input from the user,
+// in order
 const keyCalculatorMode = {
   '0': {
     keydown: [null],
@@ -81,13 +87,30 @@ const keyCalculatorMode = {
   },
 }
 
+// operations, their order, and the function associated with them
 const operators = {
-  "+": add,
-  "-": subtract,
-  "/": divide,
-  "*": multiply,
+  "+": {
+    func: add,
+    order: 3,
+  },
+  "-": {
+    func: subtract,
+    order: 4,
+  },
+  "/": {
+    func: divide,
+    order: 2,
+  },
+  "*": {
+    func: multiply,
+    order: 1,
+  },
 };
 
+
+//////////////////////////////////////////////////////////////////
+// Script Variables
+//////////////////////////////////////////////////////////////////
 
 let calcMode = true;
 
@@ -103,8 +126,16 @@ const inputString = {
 const calcOutput = document.querySelector('.screen-row.output');
 
 
+//////////////////////////////////////////////////////////////////
+// Code
+//////////////////////////////////////////////////////////////////
 
 addListeners(keyCalculatorMode, "keyup", "mouseup");
+
+
+//////////////////////////////////////////////////////////////////
+// Functions
+//////////////////////////////////////////////////////////////////
 
 function keyHandler(evt) {
   console.log(evt);
@@ -180,39 +211,27 @@ function generateCalc(operatorIndex) {
   const rightOperand = inputString.calcArray[operatorIndex+1];
   const input = inputString.calcArray[operatorIndex];
   // run the calc algorithm then replace the calculation pattern with the answer
-  inputString.calcArray.splice(operatorIndex-1, 3, operators[input](leftOperand, rightOperand))
+  inputString.calcArray.splice(operatorIndex-1, 3, operators[input].func(leftOperand, rightOperand))
 }
 
 function equals() {
   // launch w/ equal / enter /close-parenthesis
 
-  // do multiplication and division first
-  let opIndex = -1
-  do {
-    opIndex = inputString.calcArray.indexOf("*")
-      if (opIndex !== -1) generateCalc(opIndex)
+  // order of operations is significant, so we
+  // loop through the operator object in order
+  for (let i = 1; i <= Object.keys(operators).length; i++) {
+    for (const operator in operators) {
+      if (operators[operator].order === i) {
+        let opIndex = -1
+        do {
+          opIndex = inputString.calcArray.indexOf(operator)
+            if (opIndex !== -1) generateCalc(opIndex)
+          }
+        while (opIndex !== -1)
+        break;
+      }
     }
-  while (opIndex !== -1)
-
-  do {
-    opIndex = inputString.calcArray.indexOf("/")
-      if (opIndex !== -1) generateCalc(opIndex)
-    }
-  while (opIndex !== -1)
-
-
-  // now addition and subtraction
-  do {
-    opIndex = inputString.calcArray.indexOf("+")
-      if (opIndex !== -1) generateCalc(opIndex)
-    }
-  while (opIndex !== -1)
-
-  do {
-    opIndex = inputString.calcArray.indexOf("-")
-      if (opIndex !== -1) generateCalc(opIndex)
-    }
-  while (opIndex !== -1)
+  }
 
   // print the output
   console.log(inputString.calcArray);
@@ -224,7 +243,11 @@ function equals() {
 }
 
 function add(a, b) {return +a + +b}
+
 function subtract(a, b) {return +a - +b}
+
 function divide(a, b) {return a / b}
+
 function multiply(a, b) {return a * b}
+
 function exponent() {}
