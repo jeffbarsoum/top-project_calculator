@@ -6,23 +6,23 @@ import { inputString, calcOutput } from './data.js'
 
 // operations, their order, and the function associated with them
 export const operators = {
-    "+": {
-      func: add,
-      order: 3,
-    },
-    "-": {
-      func: subtract,
-      order: 4,
-    },
-    "/": {
-      func: divide,
-      order: 2,
-    },
-    "*": {
-      func: multiply,
-      order: 1,
-    },
-  };
+  "*": {
+    func: multiply,
+    order: 1,
+  },
+  "/": {
+    func: divide,
+    order: 2,
+  },
+  "+": {
+    func: add,
+    order: 3,
+  },
+  "-": {
+    func: subtract,
+    order: 4,
+  },
+ };
 
 
 //////////////////////////////////////////////////////////////////
@@ -55,6 +55,10 @@ export function equals() {
   // clear the calc array
   inputString.calcArray.length = 0
 
+}
+
+export function checkIsOperator(operator) {
+  return operator in operators
 }
 
 function generateCalc(operatorIndex) {

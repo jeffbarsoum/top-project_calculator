@@ -1,4 +1,4 @@
-import { operators } from './operators.js'
+import { checkIsOperator } from './operators.js'
 import { inputString } from './data.js'
 
 //////////////////////////////////////////////////////////////////
@@ -54,9 +54,9 @@ export function appendInput(char) {
   // clear the text input if the calc array is empty (don't forget to store these in an array for recalling)
   if (calcArray.length === 0) inputString.calcMode.textContent = '';
 
-  const isOperator = char in operators;
+  const isOperator = checkIsOperator(char);
   const isNewEntry =
-    calcArray.length === 0 || calcArray[lastIndex] in operators;
+    calcArray.length === 0 || checkIsOperator(calcArray[lastIndex]);
   if (isOperator && isNewEntry) return;
 
   if (isOperator || isNewEntry) {
