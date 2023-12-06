@@ -32,6 +32,12 @@ export const keyCalculatorMode = {
 // Functions
 //////////////////////////////////////////////////////////////////
 
+export function setKeys(keysArray = [], keyFunctionArray = [], ...events) {
+  keysArray.forEach(key => {
+    [...events].forEach(evt => keyCalculatorMode[key][evt] = keyFunctionArray)
+  })
+}
+
 export function keyHandler(evt) {
   console.log(evt);
   const isButton = evt.target.nodeName === 'BUTTON';
